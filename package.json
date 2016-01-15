@@ -1,0 +1,32 @@
+{
+  "name": "real-time",
+  "version": "1.0.0",
+  "description": "Crowdsource websockets project",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisCenatie/real-time.git"
+  },
+  "keywords": [
+    "Websockets"
+  ],
+  "author": "Chris Dinnertime",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChrisCenatie/real-time/issues"
+  },
+  "homepage": "https://github.com/ChrisCenatie/real-time#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "express-handlebars": "^2.0.1",
+    "lodash": "^4.0.0",
+    "socket.io": "^1.4.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
+}
