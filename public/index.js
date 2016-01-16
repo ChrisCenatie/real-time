@@ -12,6 +12,7 @@ $('#add-poll').on('click', function(){
 });
 
 $('#add-response').on('click', function() {
+  $('#submit-poll').show();
   var response = $('#response');
   responses.push(response.val().split(/[<>]/).join(''));
   $('.response-list').append('<li>' + response.val().split(/[<>]/).join('') + '</li>');
@@ -21,4 +22,13 @@ $('#add-response').on('click', function() {
 $('#submit-poll').on('click', function() {
   poll["responses"] = responses;
   socket.send('createPoll', poll);
+  $('.add-responses').hide();
+  this.style.visibility = "hidden";
+  poll = {};
+});
+
+socket.on('webAddresses', function (addresses) {
+  $('.web-addresses').show();
+  $(".admin").append("Admin View: <a href='" + addresses["admin"] +"'>" + addresses["admin"] + "</a>")
+  $(".voters").append("Voter View: <a href='" + addresses["voters"] +"'>" + addresses["voters"] + "</a>")
 });
