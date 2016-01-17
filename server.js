@@ -46,6 +46,7 @@ io.on('connection', function (socket) {
       createPoll(message, id);
       socket.emit('webAddresses', generateAddresses(id));
     }else if (channel == "voteResponse") {
+      console.log(polls);
       console.log(votes);
       var pollId = message.id;
       var voterId = socket.id;

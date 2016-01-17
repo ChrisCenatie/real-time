@@ -6,7 +6,7 @@ $('button').on('click', function() {
   vote["response"] = this.innerHTML;
   $('.responses').hide();
   $('.submitted').show();
-  $('h3').append("Your vote for <em>'" + vote["response"] +
+  $('h3').append("Your vote <em>'" + vote["response"] +
                          "'</em> has been submitted!");
   socket.send("voteResponse", vote)
 })

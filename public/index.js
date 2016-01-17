@@ -12,7 +12,7 @@ $('#add-poll').on('click', function(){
 });
 
 $('#add-response').on('click', function() {
-  $('#submit-poll').show();
+  $('.current-poll').show();
   var response = $('#response');
   responses.push(response.val().split(/[<>]/).join(''));
   $('.response-list').append('<li>' + response.val().split(/[<>]/).join('') + '</li>');
