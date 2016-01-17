@@ -7,9 +7,11 @@
  </head>
  <body>
    <div class="container">
+     <div class="jumbotron">
+       <h1>Real Time Polling</h1>
+       <p>What are people actually thinking?</p>
      <div class="row">
-       <div class="col-sm-5 col-sm-offset-2">
-         <h1>Crowdsource Polling</h1>
+       <div class="col-sm-5 col-sm-offset-1">
          <div class="add-poll">
             <div class="form-group">
               <label for="poll-question">Enter A Polling Question:</label>
@@ -27,18 +29,24 @@
           </div>
       </div>
     </div>
+  </div>
 
-    <h2>Current Poll</h2>
-    <div class="well">
-      <div class="current-poll">
-        <div class="poll"></div>
-        <ul class="response-list"></ul>
+    <div class="current-poll" style="display:none;">
+      <h2>Your Current Poll</h2>
+      <div class="well">
+          <div class="poll"></div>
+          <ul class="response-list"></ul>
+        <button class="btn btn-default" id="submit-poll">Submit Poll</button>
       </div>
-      <button class="btn btn-default" id="submit-poll" style="display:none;">Submit Poll</button>
     </div>
 
     <div class="web-addresses" style="display:none;">
       <h2>Web Addresses</h2>
+      <ul>
+        <li>Send the <em>Voter View</em> link out to peple you want to poll.</li>
+        <li>Visit the <em>Admin View</em> to view results and close poll.</li>
+        <li><em><strong>Don't send the "Admin View" out to voters</stong></em></li>
+      </ul>
       <div class="well">
         <div class="admin"></div>
         <div class="voters"></div>
