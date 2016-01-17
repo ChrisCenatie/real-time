@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="well">
+    <div class='responses'>
+      <h1>{{pollingQuestion}}</h1>
+      <h4>Choose An Option:</h4>
+      <ol>
+        <div id={{id}}>
+          {{#each responses}}
+            <li><button>{{this}}</button></li>
+          {{/each}}
+        </div>
+      </ol>
+    </div>
+    <div class='submitted' style='display: none;'><h3></h3></div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/voter.js"></script>

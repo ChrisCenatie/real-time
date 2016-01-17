@@ -17,6 +17,7 @@ const io = socketIo(server);
 const generateId = require('./lib/generate-id');
 
 var polls = {};
+var votes = {};
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -34,7 +35,7 @@ app.get('/voters/:id', (request, response) => {
   var pollingQuestion = polls[request.params.id].pollingQuestion;
   var responses = polls[request.params.id].responses;
 
-  response.render('admin', {id, pollingQuestion, responses})
+  response.render('voter', {id, pollingQuestion, responses})
 });
 
 
@@ -44,6 +45,18 @@ io.on('connection', function (socket) {
       var id = generateId();
       createPoll(message, id);
       socket.emit('webAddresses', generateAddresses(id));
+    }else if (channel == "voteResponse") {
+      console.log(votes);
+      var pollId = message.id;
+      var voterId = socket.id;
+      if(votes[pollId] === undefined){
+        var vote = {};
+        vote[socket.id] = message.response;
+        votes[pollId] = vote;
+      } else {
+        votes[pollId][socket.id] = message.response;
+      }
+      console.log(votes);
     }
   });
 });
