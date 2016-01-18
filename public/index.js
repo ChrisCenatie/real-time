@@ -1,6 +1,7 @@
 var socket = io();
-var poll = {};
-var responses = [];
+var poll = {url: window.location.href}; //add Sharing: true/false, Active: true/false
+var responses = {};
+var responseId = 0;
 
 $('#add-poll').on('click', function(){
   var polling = $('#poll-question');
@@ -14,7 +15,8 @@ $('#add-poll').on('click', function(){
 $('#add-response').on('click', function() {
   $('.current-poll').show();
   var response = $('#response');
-  responses.push(response.val().split(/[<>]/).join(''));
+  responses[responseId]= response.val().split(/[<>]/).join('');
+  responseId++;
   $('.response-list').append('<li>' + response.val().split(/[<>]/).join('') + '</li>');
   response.val('');
 });
@@ -25,6 +27,7 @@ $('#submit-poll').on('click', function() {
   $('.add-responses').hide();
   this.style.visibility = "hidden";
   poll = {};
+  responseId = 0;
 });
 
 socket.on('webAddresses', function (addresses) {
