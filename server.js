@@ -38,6 +38,16 @@ app.get('/voters/:id', (request, response) => {
   response.render('voter', {id, pollingQuestion, responses})
 });
 
+app.get('/admin/:id', (request, response) => {
+  var id = request.params.id
+  var pollingQuestion = polls[request.params.id].pollingQuestion;
+  var responses = polls[request.params.id].responses;
+  var responseCount = voteCountByResponse(id);
+
+
+  response.render('admin', {id, pollingQuestion, responses})
+});
+
 
 io.on('connection', function (socket) {
   socket.on('message', function(channel, message){
@@ -46,8 +56,8 @@ io.on('connection', function (socket) {
       createPoll(message, id);
       socket.emit('webAddresses', generateAddresses(id));
     }else if (channel == "voteResponse") {
-      console.log(polls);
-      console.log(votes);
+      // console.log(polls);
+      // console.log(votes);
       var pollId = message.id;
       var voterId = socket.id;
       if(votes[pollId] === undefined){
@@ -57,7 +67,11 @@ io.on('connection', function (socket) {
       } else {
         votes[pollId][socket.id] = message.response;
       }
-      console.log(votes);
+      // console.log(votes);
+      // console.log(voteCountByResponse(pollId));
+      // console.log(voteCountByResponseIndex(pollId));
+      // console.log(pollId)
+      io.sockets.emit(pollId, voteCountByResponseIndex(pollId));
     }
   });
 });
@@ -77,5 +91,22 @@ function generateAddresses(id){
            }
   }
 }
+
+function voteCountByResponse(id) {
+  return _.countBy(votes[id], function(response, voter){
+    return response;
+  });
+}
+
+function voteCountByResponseIndex(id) {
+  var responseCount = voteCountByResponse(id);
+  var responses = polls[id].responses;
+  var responseCountByIndex = {};
+  _.forEach(responseCount, function(count, response){
+    responseCountByIndex[responses.indexOf(response)] = count;
+  });
+  return responseCountByIndex;
+}
+
 
 module.exports = server;
