@@ -31,11 +31,9 @@ app.get("/", function(request, response){
 });
 
 app.get('/voters/:id', (request, response) => {
-  var id = request.params.id
-  var pollingQuestion = polls[request.params.id].pollingQuestion;
-  var responses = polls[request.params.id].responses;
-
-  response.render('voter', {id, pollingQuestion, responses})
+  var id = request.params.id;
+  // render this only if polls.findById.active is true
+  response.render('voter', polls.findById(id));
 });
 
 app.get('/admin/:id', (request, response) => {
