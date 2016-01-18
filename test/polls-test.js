@@ -2,9 +2,9 @@
 var chai = require('chai');
 var expect = chai.expect;
 var should = chai.should();
+var pry = require('pryjs');
+const _ = require('lodash');
 const Polls = require('../lib/polls');
-
-// pry = require('pryjs');
 
 describe('Polls', function() {
   beforeEach(function() {
@@ -23,10 +23,14 @@ describe('Polls', function() {
   });
 
   describe('adding a poll', function() {
-    it('should return a unique id when the poll is added', function() {
-      var data = {url: "http://localhost:3000/", pollingQuestion: "Question 1?",
-                     responses: {0: "response1", 1: "response2"}}
-      expect(this.polls.addPoll(data)).not.eql(this.polls.addPoll(data));
+    it('should add a poll to the list and return the unique id for the added poll', function() {
+      expect(_.size(this.polls.list)).eql(1);
+      var data = {url: "http://localhost:3000/", pollingQuestion: "Question 2?",
+                     responses: {0: "response1", 1: "response3"}}
+      var newId = this.polls.addPoll(data);
+
+      expect(_.size(this.polls.list)).eql(2);
+      expect(newId).not.eql(this.pollId);
     });
   });
 
@@ -40,11 +44,14 @@ describe('Polls', function() {
   });
 
   describe('find by poll id', function() {
-    it('should return poll attributes given a poll id', function() {
+    it('should return poll given a poll id', function() {
       var pollData = this.polls.findById(this.pollId)
-      this.data["open"] = true;
 
-      expect(pollData).eql(this.data)
+      expect(pollData.url).eql(this.data.url)
+      expect(pollData.pollingQuestion).eql(this.data.pollingQuestion)
+      expect(pollData.responses).eql(this.data.responses)
+      expect(pollData.open).eql(true)
+      expect(pollData.votes).eql({0: 0, 1: 0})
     });
   });
 });
