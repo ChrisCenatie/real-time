@@ -56,22 +56,4 @@ io.on('connection', function (socket) {
   });
 });
 
-
-function voteCountByResponse(id) {
-  return _.countBy(votes[id], function(response, voter){
-    return response;
-  });
-}
-
-function voteCountByResponseIndex(id) {
-  var responseCount = voteCountByResponse(id);
-  var responses = polls[id].responses;
-  var responseCountByIndex = {};
-  _.forEach(responseCount, function(count, response){
-    responseCountByIndex[responses.indexOf(response)] = count;
-  });
-  return responseCountByIndex;
-}
-
-
 module.exports = server;
