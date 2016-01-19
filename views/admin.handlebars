@@ -1,7 +1,7 @@
 <div class="container">
   <div class="well">
     <div class='responses'>
-      <h1>{{pollingQuestion}}</h1>
+      <h1>Polling Question: {{pollingQuestion}}</h1>
       <br>
       <h3>Total Votes: <div class="total"><div></h3>
       <table class="table table-hover">
@@ -12,7 +12,7 @@
         {{#each responses}}
         <tr>
           <td>{{this}}</td>
-          <td class={{@index}}>0</td>
+          <td class={{@key}}></td>
         </tr>
         {{/each}}
       </table>
@@ -26,7 +26,6 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/admin.js"></script>
 
-<!-- 1. Show polling results as they come in.
-2. Create option to close poll. Put this option on home
-3. Create option to share polling results (This will need to be updated on voter view)
-4. Create option for automatically closing poll. -->
+<!--
+1. Create option to close poll. Put this option on home
+2. Create option for automatically closing poll. -->

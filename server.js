@@ -38,7 +38,6 @@ app.get('/voters/:id', (request, response) => {
 
 app.get('/admin/:id', (request, response) => {
   var pollId = request.params.id
-  // render this only if polls.findById.active is true
   response.render('admin', polls.findById(pollId))
 });
 
@@ -50,7 +49,9 @@ io.on('connection', function (socket) {
       socket.emit('webAddresses', polls.urls(id));
     } else if (channel == "voteResponse") {
       polls.addVote(message.pollId, message.voteId)
-      io.sockets.emit(message.pollId, polls.voteData(message.pollId);
+      io.sockets.emit(message.pollId, polls.voteData(message.pollId));
+    } else if (channel == "latestVoteData"){
+      io.sockets.emit(message.pollId, polls.voteData(message.pollId));
     }
   });
 });
