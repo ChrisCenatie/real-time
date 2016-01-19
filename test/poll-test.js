@@ -20,6 +20,7 @@ describe('Poll', function() {
       expect(this.poll.responses).eql(this.data.responses);
       expect(this.poll.open).eql(true);
       expect(this.poll.votes).eql({0: 0, 1: 0})
+      expect(this.poll.share).eql(false)
     });
   });
 
