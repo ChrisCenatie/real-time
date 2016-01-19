@@ -96,4 +96,22 @@ describe('Polls', function() {
       expect(votingData).eql({total: 0, votes: {0: 0, 1: 0}})
     });
   });
+
+  describe('open', function() {
+    it('should change the open status of poll given a valid poll id', function() {
+      expect(this.polls.findById(this.pollId).open).eql(true)
+
+      this.polls.closePoll(this.pollId)
+
+      expect(this.polls.findById(this.pollId).open).eql(false)
+    });
+
+    it('should not change the open status of poll given an invalid poll id', function() {
+      expect(this.polls.findById(this.pollId).open).eql(true)
+
+      this.polls.closePoll("10")
+
+      expect(this.polls.findById(this.pollId).open).eql(true)
+    });
+  });
 });
