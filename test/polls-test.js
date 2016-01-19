@@ -114,22 +114,4 @@ describe('Polls', function() {
       expect(this.polls.findById(this.pollId).open).eql(true)
     });
   });
-
-  describe('sharePoll', function() {
-    it('should change the share status of poll given a valid poll id', function() {
-      expect(this.polls.findById(this.pollId).share).eql(false)
-
-      this.polls.sharePoll(this.pollId)
-
-      expect(this.polls.findById(this.pollId).share).eql(true)
-    });
-
-    it('should not change the share status of poll given an invalid poll id', function() {
-      expect(this.polls.findById(this.pollId).share).eql(false)
-
-      this.polls.sharePoll("10")
-
-      expect(this.polls.findById(this.pollId).share).eql(false)
-    });
-  });
 });

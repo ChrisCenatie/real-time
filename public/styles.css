@@ -14,3 +14,8 @@
   color: red;
   display: none;
 }
+
+#stats-shared-message {
+  color: green;
+  display: none;
+}

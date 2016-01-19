@@ -25,7 +25,8 @@ $('#submit-poll').on('click', function() {
   poll["responses"] = responses;
   socket.send('createPoll', poll);
   $('.add-responses').hide();
-  this.style.visibility = "hidden";
+  $('#share-stats').hide();
+  this.style.display = "none";
   poll = {};
   responseId = 0;
 });
@@ -34,4 +35,10 @@ socket.on('webAddresses', function (addresses) {
   $('.web-addresses').show();
   $(".admin").append("Admin View: <a href='" + addresses["admin"] +"'>" + addresses["admin"] + "</a>")
   $(".voters").append("Voter View: <a href='" + addresses["voters"] +"'>" + addresses["voters"] + "</a>")
+});
+
+$('#share-stats').on('click', function() {
+  this.style.display = "none";
+  $('#stats-shared-message').show();
+  poll["shareStats"] = true;
 });

@@ -14,13 +14,27 @@ describe('Poll', function() {
   });
 
   describe('instantiation', function() {
-    it('should instantiate with url, pollingQuestion, responses, and open status of true', function() {
+    it('should instantiate with url, pollingQuestion, responses, open status of true, and default share status of false', function() {
       expect(this.poll.url).eql(this.data.url);
       expect(this.poll.pollingQuestion).eql(this.data.pollingQuestion);
       expect(this.poll.responses).eql(this.data.responses);
       expect(this.poll.open).eql(true);
       expect(this.poll.votes).eql({0: 0, 1: 0})
-      expect(this.poll.share).eql(false)
+      expect(this.poll.shareStats).eql(false)
+    });
+
+    it('should instantiate with url, pollingQuestion, responses, open status of true, and share status of true', function() {
+      var data = {url: "http://localhost:3000/", pollingQuestion: "Question 1?",
+                     responses: {0: "response1", 1: "response2"}, shareStats: true};
+
+      var poll = new Poll(data);
+
+      expect(poll.url).eql(data.url);
+      expect(poll.pollingQuestion).eql(data.pollingQuestion);
+      expect(poll.responses).eql(data.responses);
+      expect(poll.open).eql(true);
+      expect(poll.votes).eql({0: 0, 1: 0})
+      expect(poll.shareStats).eql(true)
     });
   });
 

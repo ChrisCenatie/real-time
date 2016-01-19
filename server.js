@@ -17,7 +17,6 @@ const io = socketIo(server);
 const Polls = require('./lib/polls');
 
 var polls = new Polls();
-var votes = {};
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -45,6 +44,8 @@ io.on('connection', function (socket) {
   socket.on('message', function(channel, message){
     if(channel == "createPoll"){
       var id = polls.addPoll(message);
+      console.log(polls);
+      console.log(message);
       socket.emit('webAddresses', polls.urls(id));
     } else if (channel == "voteResponse") {
       polls.addVote(message.pollId, message.voteId)
