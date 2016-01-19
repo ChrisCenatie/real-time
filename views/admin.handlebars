@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="well">
+    <div class='responses'>
+      <h1>Polling Question: {{pollingQuestion}}</h1>
+      <br>
+      <h3>Total Votes: <div class="total"><div></h3>
+      <table class="table table-hover">
+        <tr>
+          <th>Voting Response</th>
+          <th>Number of Votes</th>
+        </tr>
+        {{#each responses}}
+        <tr>
+          <td>{{this}}</td>
+          <td class={{@key}}></td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+    <div class='submitted' style='display: none;'><h3></h3></div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/admin.js"></script>
+
+<!--
+1. Create option to close poll. Put this option on home
+2. Create option for automatically closing poll. -->

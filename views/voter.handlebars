@@ -4,11 +4,9 @@
       <h1>{{pollingQuestion}}</h1>
       <h4>Choose An Option:</h4>
       <ol>
-        <div id={{id}}>
-          {{#each responses}}
-            <li><button>{{this}}</button></li>
-          {{/each}}
-        </div>
+        {{#each responses}}
+          <li><button class={{@key}}>{{this}}</button></li>
+        {{/each}}
       </ol>
     </div>
     <div class='submitted' style='display: none;'><h3></h3></div>

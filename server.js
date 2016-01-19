@@ -14,9 +14,9 @@ const server = http.createServer(app)
 const socketIo = require('socket.io');
 const io = socketIo(server);
 
-const generateId = require('./lib/generate-id');
+const Polls = require('./lib/polls');
 
-var polls = {};
+var polls = new Polls();
 var votes = {};
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -31,51 +31,47 @@ app.get("/", function(request, response){
 });
 
 app.get('/voters/:id', (request, response) => {
-  var id = request.params.id
-  var pollingQuestion = polls[request.params.id].pollingQuestion;
-  var responses = polls[request.params.id].responses;
+  var pollId = request.params.id;
+  // render this only if polls.findById.active is true
+  response.render('voter', polls.findById(pollId));
+});
 
-  response.render('voter', {id, pollingQuestion, responses})
+app.get('/admin/:id', (request, response) => {
+  var pollId = request.params.id
+  response.render('admin', polls.findById(pollId))
 });
 
 
 io.on('connection', function (socket) {
   socket.on('message', function(channel, message){
     if(channel == "createPoll"){
-      var id = generateId();
-      createPoll(message, id);
-      socket.emit('webAddresses', generateAddresses(id));
-    }else if (channel == "voteResponse") {
-      console.log(polls);
-      console.log(votes);
-      var pollId = message.id;
-      var voterId = socket.id;
-      if(votes[pollId] === undefined){
-        var vote = {};
-        vote[socket.id] = message.response;
-        votes[pollId] = vote;
-      } else {
-        votes[pollId][socket.id] = message.response;
-      }
-      console.log(votes);
+      var id = polls.addPoll(message);
+      socket.emit('webAddresses', polls.urls(id));
+    } else if (channel == "voteResponse") {
+      polls.addVote(message.pollId, message.voteId)
+      io.sockets.emit(message.pollId, polls.voteData(message.pollId));
+    } else if (channel == "latestVoteData"){
+      io.sockets.emit(message.pollId, polls.voteData(message.pollId));
     }
   });
 });
 
-function createPoll(message, id){
-  polls[id] = message;
+
+function voteCountByResponse(id) {
+  return _.countBy(votes[id], function(response, voter){
+    return response;
+  });
 }
 
-function generateAddresses(id){
-  if (port === 3000){
-    return { admin: "http://localhost:3000/admin/" + id,
-             voters: "http://localhost:3000/voters/" + id,
-           }
-  } else {
-    return { admin: "https://#/admin/" + id,
-             voters: "https://#/voters/" + id,
-           }
-  }
+function voteCountByResponseIndex(id) {
+  var responseCount = voteCountByResponse(id);
+  var responses = polls[id].responses;
+  var responseCountByIndex = {};
+  _.forEach(responseCount, function(count, response){
+    responseCountByIndex[responses.indexOf(response)] = count;
+  });
+  return responseCountByIndex;
 }
+
 
 module.exports = server;
