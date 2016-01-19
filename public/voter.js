@@ -11,5 +11,5 @@ $('button').on('click', function() {
   $('.submitted').show();
   $('h3').append("Your vote <em>'" + responseTitle +
                          "'</em> has been submitted!");
-  // socket.send("voteResponse", vote)
+  socket.send("voteResponse", vote)
 })

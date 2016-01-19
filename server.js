@@ -31,19 +31,15 @@ app.get("/", function(request, response){
 });
 
 app.get('/voters/:id', (request, response) => {
-  var id = request.params.id;
+  var pollId = request.params.id;
   // render this only if polls.findById.active is true
-  response.render('voter', polls.findById(id));
+  response.render('voter', polls.findById(pollId));
 });
 
 app.get('/admin/:id', (request, response) => {
-  var id = request.params.id
-  var pollingQuestion = polls[request.params.id].pollingQuestion;
-  var responses = polls[request.params.id].responses;
-  var responseCount = voteCountByResponse(id);
-
-
-  response.render('admin', {id, pollingQuestion, responses})
+  var pollId = request.params.id
+  // render this only if polls.findById.active is true
+  response.render('admin', polls.findById(pollId))
 });
 
 
@@ -52,24 +48,10 @@ io.on('connection', function (socket) {
     if(channel == "createPoll"){
       var id = polls.addPoll(message);
       socket.emit('webAddresses', polls.urls(id));
-    }//else if (channel == "voteResponse") {
-      // console.log(polls);
-      // console.log(votes);
-    //   var pollId = message.id;
-    //   var voterId = socket.id;
-    //   if(votes[pollId] === undefined){
-    //     var vote = {};
-    //     vote[socket.id] = message.response;
-    //     votes[pollId] = vote;
-    //   } else {
-    //     votes[pollId][socket.id] = message.response;
-    //   }
-    //   // console.log(votes);
-    //   // console.log(voteCountByResponse(pollId));
-    //   // console.log(voteCountByResponseIndex(pollId));
-    //   // console.log(pollId)
-    //   io.sockets.emit(pollId, voteCountByResponseIndex(pollId));
-    // }
+    } else if (channel == "voteResponse") {
+      polls.addVote(message.pollId, message.voteId)
+      io.sockets.emit(message.pollId, polls.voteData(message.pollId);
+    }
   });
 });
 
