@@ -54,4 +54,46 @@ describe('Polls', function() {
       expect(pollData.votes).eql({0: 0, 1: 0})
     });
   });
+
+  describe('votes', function() {
+    it('should return the vote distribution and total given the poll id', function() {
+      var votingData = this.polls.voteData(this.pollId)
+
+      expect(votingData).eql({total: 0, votes: {0: 0, 1: 0}})
+    });
+
+    it('should increment vote count by 1 to poll given a valid poll id and voteId', function() {
+      var voteId = "0"
+      var votingData1 = this.polls.voteData(this.pollId)
+
+      expect(votingData1).eql({total: 0, votes: {0: 0, 1: 0}})
+
+      this.polls.addVote(this.pollId, voteId)
+      var votingData2 = this.polls.voteData(this.pollId)
+
+      expect(votingData2).eql({total: 1, votes: {0: 1, 1: 0}})
+    });
+
+    it('should not increment vote count by 1 to poll given an invalid poll id', function() {
+      var voteId = "0"
+      var votingData = this.polls.voteData(this.pollId)
+
+      expect(votingData).eql({total: 0, votes: {0: 0, 1: 0}})
+
+      this.polls.addVote("0", voteId)
+
+      expect(votingData).eql({total: 0, votes: {0: 0, 1: 0}})
+    });
+
+    it('should not increment vote count by 1 to poll given an invalid vote id', function() {
+      var voteId = "20"
+      var votingData = this.polls.voteData(this.pollId)
+
+      expect(votingData).eql({total: 0, votes: {0: 0, 1: 0}})
+
+      this.polls.addVote(this.pollId, voteId)
+
+      expect(votingData).eql({total: 0, votes: {0: 0, 1: 0}})
+    });
+  });
 });
