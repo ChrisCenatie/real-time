@@ -9,3 +9,8 @@
 .jumbotron {
   background-color: lightblue;
 }
+
+.poll-closed {
+  color: red;
+  display: none;
+}

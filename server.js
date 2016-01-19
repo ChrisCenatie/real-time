@@ -52,6 +52,9 @@ io.on('connection', function (socket) {
       io.sockets.emit(message.pollId, polls.voteData(message.pollId));
     } else if (channel == "latestVoteData"){
       io.sockets.emit(message.pollId, polls.voteData(message.pollId));
+    } else if (channel == "close-poll"){
+      polls.closePoll(message.pollId)
+      io.sockets.emit("close-" + message.pollId, {open: false});
     }
   });
 });

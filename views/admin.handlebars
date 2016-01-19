@@ -1,5 +1,10 @@
 <div class="container">
   <div class="well">
+    {{#if open}}
+      <h1 class="poll-closed">Pole Has Been Closed</h1>
+    {{else}}
+      <h1 class="poll-closed" style="display:block;">Pole Has Been Closed</h1>
+    {{/if}}
     <div class='responses'>
       <h1>Polling Question: {{pollingQuestion}}</h1>
       <br>
@@ -17,7 +22,11 @@
         {{/each}}
       </table>
     </div>
-    <div class='submitted' style='display: none;'><h3></h3></div>
+    {{#if open}}
+      <button class="close-poll btn btn-danger">Close Pole</div>
+    {{else}}
+      <button class="close-poll btn btn-danger" style="display:none;">Close Pole</div>
+    {{/if}}
   </div>
 </div>
 
