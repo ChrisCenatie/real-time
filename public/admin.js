@@ -5,7 +5,6 @@ var id = parsedUrl[parsedUrl.length - 1];
 socket.send("latestVoteData", {pollId: id})
 
 socket.on(id, function(voteData) {
-  console.log(voteData);
   var responseCount = $('td:not(class)').length;
   $('.total').text(voteData.total)
   for( var i = 0; i < responseCount; i++) {
@@ -16,3 +15,9 @@ socket.on(id, function(voteData) {
     }
   }
 })
+
+$('.close-poll').on('click', function() {
+  this.style.display = "none";
+  $('.poll-closed').show();
+  socket.send("close-poll", {pollId: id});
+});

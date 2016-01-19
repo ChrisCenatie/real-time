@@ -1,4 +1,6 @@
 <div class="container">
+  {{#if open}}
+  <h1 class="poll-closed">Pole Has Been Closed</h1>
   <div class="well">
     <div class='responses'>
       <h1>{{pollingQuestion}}</h1>
@@ -11,6 +13,9 @@
     </div>
     <div class='submitted' style='display: none;'><h3></h3></div>
   </div>
+  {{else}}
+    <h1 class="poll-closed" style="display:block;">Pole Has Been Closed</h1>
+  {{/if}}
 </div>
 
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
