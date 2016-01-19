@@ -6,7 +6,7 @@ socket.send("latestVoteData", {pollId: id});
 
 socket.on(id, function(voteData) {
   var responseCount = $('td:not(class)').length;
-  $('.total').text(voteData.total)
+  $('.total').text(`Total Votes: ` + voteData.total)
   for( var i = 0; i < responseCount; i++) {
     if (voteData.votes[i] !== undefined){
       $('.' + i).text(voteData.votes[i]);
