@@ -32,7 +32,6 @@ app.get("/", function(request, response){
 
 app.get('/voters/:id', (request, response) => {
   var pollId = request.params.id;
-  // render this only if polls.findById.active is true
   response.render('voter', polls.findById(pollId));
 });
 
