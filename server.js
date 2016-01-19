@@ -17,7 +17,6 @@ const io = socketIo(server);
 const Polls = require('./lib/polls');
 
 var polls = new Polls();
-var votes = {};
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');

@@ -97,7 +97,7 @@ describe('Polls', function() {
     });
   });
 
-  describe('open', function() {
+  describe('closePoll', function() {
     it('should change the open status of poll given a valid poll id', function() {
       expect(this.polls.findById(this.pollId).open).eql(true)
 

@@ -12,6 +12,25 @@
       </ol>
     </div>
     <div class='submitted' style='display: none;'><h3></h3></div>
+
+    {{#if shareStats}}
+    <div class="stats">
+      <h2><div class="total"></div></h2>
+      <table class="table table-hover">
+        <tr>
+          <th>Voting Response</th>
+          <th>Number of Votes</th>
+        </tr>
+        {{#each responses}}
+        <tr>
+          <td>{{this}}</td>
+          <td class="stats{{@key}}"></td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+    {{/if}}
+
   </div>
   {{else}}
     <h1 class="poll-closed" style="display:block;">Pole Has Been Closed</h1>
