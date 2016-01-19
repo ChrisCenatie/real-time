@@ -10,4 +10,11 @@ $('button').on('click', function() {
   $('h3').append("Your vote <em>'" + responseTitle +
                          "'</em> has been submitted!");
   socket.send("voteResponse", vote)
-})
+});
+
+socket.on("close-" + vote.pollId, function(message) {
+  if(message.open === false){
+    $('.well').hide();
+    $('.poll-closed').show();
+  }
+});
